@@ -1,0 +1,1 @@
+Dense(512,relu)+BN+Drop(0.3) -> Dense(128,relu)+BN+Drop(0.2) -> Dense(32,relu)+Drop(0.1) -> Dense(16,relu) -> Dense(1)

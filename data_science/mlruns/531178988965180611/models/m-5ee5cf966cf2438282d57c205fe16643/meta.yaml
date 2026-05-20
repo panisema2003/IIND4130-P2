@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/n.salazars/Documents/Uniandes_D_MSI/2026-1/IIND_4130/proyecto/p2/repo/IIND4130-P2/data_science/mlruns/531178988965180611/models/m-5ee5cf966cf2438282d57c205fe16643/artifacts
+creation_timestamp: 1779312052420
+experiment_id: '531178988965180611'
+last_updated_timestamp: 1779312073503
+model_id: m-5ee5cf966cf2438282d57c205fe16643
+model_type: null
+name: model
+source_run_id: 42931c32ae2848c4b53066b19f3a69e6
+status: 2
+status_message: null

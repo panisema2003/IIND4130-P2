@@ -1,0 +1,1 @@
+Dense(512,relu) -> Dense(256,relu) -> Dense(1)
