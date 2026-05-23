@@ -1,0 +1,136 @@
+/* ─────────────────────────────────────────────────────────
+   Predictor ICFES - Ministerio de Educación
+   Palette: vinotinto #7B1C2B · crema #FAF5EC
+───────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #FAF5EC;
+  color: #2c3e50;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.header-row {
+  background-color: #7B1C2B;
+  border-radius: 0 0 16px 16px;
+  margin: 0 -24px;
+  padding: 0 24px;
+}
+
+/* ── Predict button ──────────────────────────────────────── */
+.predict-btn {
+  background-color: #7B1C2B !important;
+  border: none !important;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  font-size: 1.05rem;
+  padding: 14px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 4px 12px rgba(123, 28, 43, 0.30);
+}
+.predict-btn:hover {
+  background-color: #5E1520 !important;
+  transform: translateY(-1px);
+}
+.predict-btn:active {
+  background-color: #5E1520 !important;
+  transform: translateY(0);
+}
+
+/* ── Section cards ───────────────────────────────────────── */
+.card {
+  border-radius: 12px;
+  border: none;
+  background-color: #ffffff;
+}
+.card-header {
+  border-radius: 12px 12px 0 0 !important;
+  padding: 10px 16px;
+}
+
+.section-header {
+  background-color: #F0E8D5 !important;
+  border-left: 4px solid #7B1C2B;
+}
+.section-title {
+  color: #7B1C2B;
+  font-size: 0.9rem;
+}
+
+/* ── Form labels ─────────────────────────────────────────── */
+.form-label,
+.input-label {
+  font-size: 0.82rem;
+  color: #495057;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* ── Metric cards ────────────────────────────────────────── */
+.metric-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.metric-label {
+  font-size: 0.72rem;
+  color: #95a5a6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Big score display ───────────────────────────────────── */
+.big-score {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* ── Dropdown customization ──────────────────────────────── */
+.Select-control {
+  border-radius: 8px !important;
+  font-size: 0.88rem !important;
+}
+.Select-menu-outer {
+  border-radius: 0 0 8px 8px !important;
+  font-size: 0.88rem !important;
+}
+
+/* ── Checklist switches ──────────────────────────────────── */
+.form-check-input:checked {
+  background-color: #7B1C2B;
+  border-color: #7B1C2B;
+}
+
+/* ── Tabs ────────────────────────────────────────────────── */
+.nav-tabs .nav-link {
+  color: #6c757d;
+  font-size: 0.88rem;
+}
+.nav-tabs .nav-link.active {
+  color: #7B1C2B;
+  font-weight: 600;
+  border-bottom: 3px solid #7B1C2B;
+}
+
+/* ── Banner alert ────────────────────────────────────────── */
+.banner-alert {
+  background-color: #F0E8D5 !important;
+  border-color: #c9b99a !important;
+  color: #2c3e50 !important;
+  border-left: 4px solid #7B1C2B !important;
+}
+
+/* ── Scrollbar (webkit) ──────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F0E8D5; }
+::-webkit-scrollbar-thumb { background: #c9b99a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #7B1C2B; }
+
+/* ── Responsive tweaks ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .header-row { border-radius: 0; margin: 0 -12px; padding: 0 12px; }
+  .big-score { font-size: 2.4rem; }
+}
