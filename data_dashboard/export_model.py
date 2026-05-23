@@ -159,6 +159,9 @@ X_test  = X_test_df.to_numpy(dtype=np.float32)
 y_train = y_train.to_numpy(dtype=np.float32)
 y_test  = y_test.to_numpy(dtype=np.float32)
 
+# Background mean for group-ablation explanations (SHAP-like)
+background_mean = X_train.mean(axis=0).astype(np.float32)
+
 print(f"  Train: {X_train.shape} | Test: {X_test.shape}")
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -228,6 +231,10 @@ print("Saving artifacts...")
 model_path = os.path.join(MODEL_DIR, "model.keras")
 model.save(model_path)
 print(f"  Model saved to {model_path}")
+
+# Background mean
+np.save(os.path.join(MODEL_DIR, "background_mean.npy"), background_mean)
+print(f"  background_mean.npy saved ({len(background_mean)} features)")
 
 # Feature columns
 with open(os.path.join(MODEL_DIR, "feature_columns.json"), "w") as f:

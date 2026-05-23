@@ -112,6 +112,36 @@ def make_gauge(score: float) -> go.Figure:
     return fig
 
 
+def make_global_shap_chart() -> go.Figure:
+    groups = loader.shap_global
+    if not groups:
+        return go.Figure()
+    labels = [g["label"] for g in reversed(groups)]
+    values = [g["importance"] for g in reversed(groups)]
+    max_v  = max(values) if values else 1
+    colors = [
+        f"rgba(123,28,43,{0.35 + 0.65 * (v / max_v):.2f})"
+        for v in values
+    ]
+    fig = go.Figure(go.Bar(
+        x=values, y=labels, orientation="h",
+        marker_color=colors,
+        text=[f"{v:.1f} pts" for v in values],
+        textposition="outside",
+        textfont=dict(size=11),
+        hovertemplate="%{y}: %{x:.2f} pts<extra></extra>",
+    ))
+    fig.update_layout(
+        xaxis=dict(title="Media |SHAP| (pts)", showgrid=True, gridcolor="#f0f0f0"),
+        yaxis=dict(tickfont=dict(size=11)),
+        margin=dict(l=10, r=60, t=10, b=30),
+        height=max(280, len(groups) * 28 + 60),
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+    )
+    return fig
+
+
 def make_context_bar(score: float) -> go.Figure:
     mean = info["target_mean"]
     mae  = info["metrics"]["mae"]
@@ -534,6 +564,27 @@ app.layout = dbc.Container([
                             ], className="text-center"),
                         ]),
                     ], className="py-2"),
+                ], className="mb-3 shadow-sm"),
+
+                # Global SHAP card (always visible)
+                dbc.Card([
+                    dbc.CardHeader(html.H6(
+                        [html.I(className="bi bi-bar-chart-line me-2"),
+                         "Importancia Global de Variables (SHAP)"],
+                        className="mb-0 fw-bold section-title",
+                    ), className="section-header"),
+                    dbc.CardBody([
+                        html.P(
+                            "Media del valor absoluto SHAP por grupo de variables, "
+                            "calculada sobre 300 estudiantes del conjunto de prueba. "
+                            "Refleja cuántos puntos aporta en promedio cada grupo a la predicción.",
+                            className="small text-muted mb-2",
+                        ),
+                        dcc.Graph(
+                            figure=make_global_shap_chart(),
+                            config={"displayModeBar": False},
+                        ),
+                    ], className="py-2 px-3"),
                 ], className="shadow-sm"),
 
             ], md=7),
@@ -633,29 +684,33 @@ def predict(
     )
     delta_color = "#1e8449" if delta_mean >= 0 else "#c0392b"
 
-    # Insight bullets
-    def insight(icon_class: str, icon_color: str, text: str):
+    # Model-derived group ablation insights
+    try:
+        group_impacts = loader.explain_groups(user_inputs, top_n=5)
+    except Exception:
+        group_impacts = []
+
+    def impact_item(label_text: str, impact: float):
+        if impact >= 0:
+            icon, icon_color, sign = "bi-arrow-up-circle-fill", "#1e8449", f"+{impact:.1f}"
+        else:
+            icon, icon_color, sign = "bi-arrow-down-circle-fill", "#c0392b", f"{impact:.1f}"
         return html.Li([
-            html.I(className=f"bi {icon_class} me-2", style={"color": icon_color}),
-            text,
+            html.I(className=f"bi {icon} me-2", style={"color": icon_color}),
+            html.Strong(f"{sign} pts"),
+            html.Span(f" · {label_text}", className="text-muted"),
         ], className="mb-1 small")
 
-    insights = []
-    if "internet" in recursos and "computador" in recursos:
-        insights.append(insight("bi-check-circle-fill", "#1e8449",
-                                "Acceso a internet y computador: factor positivo para el desempeño."))
-    elif "internet" not in recursos and "computador" not in recursos:
-        insights.append(insight("bi-exclamation-triangle-fill", "#d35400",
-                                "Sin acceso a internet ni computador: puede limitar el aprendizaje."))
-    if not naturaleza:
-        insights.append(insight("bi-info-circle-fill", "#1a5276",
-                                "Colegio privado: históricamente asociado con mayores puntajes."))
-    if not area:
-        insights.append(insight("bi-geo-alt-fill", "#888",
-                                "Zona rural: el acceso a recursos puede ser más limitado."))
-    if bilingue:
-        insights.append(insight("bi-translate", "#1e8449",
-                                "Colegio bilingüe: puede mejorar el componente de inglés."))
+    if group_impacts:
+        insights_content = html.Ul(
+            [impact_item(g["label"], g["impact"]) for g in group_impacts],
+            className="mb-0 ps-2",
+        )
+    else:
+        insights_content = html.P(
+            "No se identificaron factores destacables con esta combinación.",
+            className="text-muted small mb-0",
+        )
 
     return [
         dbc.Card([
@@ -710,9 +765,11 @@ def predict(
                 className="mb-0 fw-bold section-title",
             ), className="section-header"),
             dbc.CardBody([
-                html.Ul(insights, className="mb-0 ps-2") if insights else
-                html.P("No se identificaron factores destacables con esta combinación.",
-                       className="text-muted small mb-0"),
+                html.P(
+                    "Impacto estimado de cada factor en tu puntaje vs. el estudiante promedio del Cesar:",
+                    className="small text-muted mb-2",
+                ),
+                insights_content,
             ], className="py-2 px-3"),
         ], className="shadow-sm"),
     ]

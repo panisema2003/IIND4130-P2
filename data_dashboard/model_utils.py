@@ -113,6 +113,33 @@ PERSONAS_MAP = {
 }
 
 
+# ── Feature groups for group-ablation explanations ────────────────────────────
+# Each entry: (human label, feature_def)
+# feature_def = list of exact column names  OR  str prefix to match all columns
+
+FEATURE_GROUPS = [
+    ("Tipo de colegio (oficial/privado)",   ["cole_oficial"]),
+    ("Colegio bilingüe",                    ["cole_bilingue"]),
+    ("Área del colegio (urbano/rural)",     ["cole_area_urbano"]),
+    ("Calendario escolar",                  ["cole_calendario_a"]),
+    ("Tecnología en el hogar",              ["fami_tienecomputador", "fami_tieneinternet",
+                                             "fami_tieneautomovil", "fami_tienelavadora"]),
+    ("Educación de la madre",               "fami_educacionmadre_"),
+    ("Educación del padre",                 "fami_educacionpadre_"),
+    ("Estrato socioeconómico",              "fami_estratovivienda_"),
+    ("Tamaño del hogar",                    "fami_personashogar_"),
+    ("Espacio en el hogar (cuartos)",       "fami_cuartoshogar_"),
+    ("Jornada escolar",                     "cole_jornada_"),
+    ("Carácter del colegio",               "cole_caracter_"),
+    ("Municipio del colegio",               "cole_cod_mcpio_ubicacion_"),
+    ("Municipio de residencia",             "estu_cod_reside_mcpio_"),
+    ("Género del estudiante",               ["estu_masculino"]),
+    ("Nacionalidad",                        "estu_nacionalidad_"),
+    ("Establecimiento educativo",           "cole_cod_dane_establecimiento_"),
+    ("Período del examen",                  ["periodo"]),
+]
+
+
 class ModelLoader:
     """Loads and caches model + artifacts at startup."""
 
@@ -121,12 +148,15 @@ class ModelLoader:
         self.model = None
         self.feature_columns: list[str] = []
         self.model_info: dict = {}
+        self.background_mean: np.ndarray | None = None
+        self.shap_global: list = []
         self._load()
 
     def _load(self):
         model_path = os.path.join(self.model_dir, "model.keras")
         feat_path  = os.path.join(self.model_dir, "feature_columns.json")
         info_path  = os.path.join(self.model_dir, "model_info.json")
+        bg_path    = os.path.join(self.model_dir, "background_mean.npy")
 
         if not os.path.exists(model_path):
             raise FileNotFoundError(
@@ -139,6 +169,15 @@ class ModelLoader:
             self.feature_columns = json.load(f)
         with open(info_path) as f:
             self.model_info = json.load(f)
+        if os.path.exists(bg_path):
+            self.background_mean = np.load(bg_path)
+
+        shap_path = os.path.join(self.model_dir, "shap_global.json")
+        if os.path.exists(shap_path):
+            with open(shap_path, encoding="utf-8") as f:
+                self.shap_global: list = json.load(f)
+        else:
+            self.shap_global = []
 
     def predict(self, user_inputs: dict) -> float:
         """
@@ -172,6 +211,54 @@ class ModelLoader:
         x = row.to_numpy(dtype=np.float32).reshape(1, -1)
         pred = self.model.predict(x, verbose=0)[0][0]
         return float(pred)
+
+    def explain_groups(self, user_inputs: dict, top_n: int = 5) -> list:
+        """
+        Group ablation: for each feature group, replace the user's values with the
+        training-set mean and measure the prediction change.
+
+        impact = baseline_pred - ablated_pred
+          > 0 → group contributes positively to this student's score vs. average
+          < 0 → group pulls the score below average
+
+        Returns top_n groups sorted by |impact| descending.
+        Each item: {"label": str, "impact": float}
+        """
+        if self.background_mean is None:
+            return []
+
+        baseline_row = self._build_feature_row(user_inputs).to_numpy(dtype=np.float32)
+        feat_idx = {c: i for i, c in enumerate(self.feature_columns)}
+
+        ablated_rows = []
+        group_labels = []
+
+        for label, group_def in FEATURE_GROUPS:
+            row = baseline_row.copy()
+            if isinstance(group_def, list):
+                for feat_name in group_def:
+                    if feat_name in feat_idx:
+                        i = feat_idx[feat_name]
+                        row[i] = self.background_mean[i]
+            else:
+                prefix = group_def
+                for feat_name in self.feature_columns:
+                    if feat_name.startswith(prefix):
+                        i = feat_idx[feat_name]
+                        row[i] = self.background_mean[i]
+            ablated_rows.append(row)
+            group_labels.append(label)
+
+        batch = np.array(ablated_rows, dtype=np.float32)
+        baseline_pred = float(self.model.predict(baseline_row.reshape(1, -1), verbose=0)[0][0])
+        ablated_preds = self.model.predict(batch, verbose=0).flatten()
+
+        impacts = [
+            (lbl, float(baseline_pred - abl_pred))
+            for lbl, abl_pred in zip(group_labels, ablated_preds)
+        ]
+        impacts.sort(key=lambda x: abs(x[1]), reverse=True)
+        return [{"label": lbl, "impact": imp} for lbl, imp in impacts[:top_n]]
 
     def _build_feature_row(self, ui: dict) -> pd.Series:
         """Reconstruct a single preprocessed row aligned to feature_columns."""
