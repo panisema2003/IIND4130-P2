@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/Asus/Desktop/Clases/Analítica/Proy2/IIND4130-P2/data_science_3/mlruns/320118271050873575/26f96b224f77408bab8513e5aa6c6d8d/artifacts
+end_time: 1779650661399
+entry_point_name: ''
+experiment_id: '320118271050873575'
+lifecycle_stage: active
+run_id: 26f96b224f77408bab8513e5aa6c6d8d
+run_name: p1_arch_4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1779650547105
+status: 3
+tags: []
+user_id: Asus
