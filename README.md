@@ -24,4 +24,5 @@
 ./despliegue/data_dashboard
 
 
-
+## Enlace de la presentación 
+https://canva.link/e6kamipanyf2fuz
