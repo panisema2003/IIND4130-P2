@@ -1,0 +1,20 @@
+{
+  "task": "binary_classification",
+  "target": "cole_bilingue",
+  "target_pos": "S",
+  "n_features": 16,
+  "n_train": 49990,
+  "n_test": 12498,
+  "architecture": "medium [128,64,32] dropout=[0.4,0.3,0.2] lr=0.0001",
+  "metrics": {
+    "accuracy": 0.6717874859977596,
+    "precision": 0.039618138424821,
+    "recall": 0.680327868852459,
+    "f1": 0.07487595850248083,
+    "auc_roc": 0.7817077795942173
+  },
+  "class_dist": {
+    "no_bilingue": 61269,
+    "bilingue": 1219
+  }
+}
