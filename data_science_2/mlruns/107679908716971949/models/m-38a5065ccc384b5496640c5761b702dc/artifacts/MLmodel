@@ -1,0 +1,20 @@
+artifact_path: file:c:/Users/manes/Downloads/Repositorios/IIND4130-P2/data_science_2/mlruns/107679908716971949/models/m-38a5065ccc384b5496640c5761b702dc/artifacts
+flavors:
+  keras:
+    data: data
+    keras_backend: tensorflow
+    keras_version: 3.13.2
+    save_exported_model: false
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.keras
+    python_version: 3.13.11
+mlflow_version: 3.12.0
+model_id: m-38a5065ccc384b5496640c5761b702dc
+model_size_bytes: 205212
+model_uuid: m-38a5065ccc384b5496640c5761b702dc
+prompts: null
+run_id: abd98b9ac79d4638af190ee857e12fab
+utc_time_created: '2026-05-26 00:26:47.613861'

@@ -1,0 +1,14 @@
+artifact_uri: file:c:/Users/manes/Downloads/Repositorios/IIND4130-P2/data_science_2/mlruns/107679908716971949/ca32b2834ba54eddb8fee09bf7b1d1a6/artifacts
+end_time: 1779755304195
+entry_point_name: ''
+experiment_id: '107679908716971949'
+lifecycle_stage: active
+run_id: ca32b2834ba54eddb8fee09bf7b1d1a6
+run_name: lr_0.005_deep
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1779755255796
+status: 3
+tags: []
+user_id: manes
