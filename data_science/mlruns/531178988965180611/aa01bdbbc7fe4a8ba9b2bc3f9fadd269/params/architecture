@@ -1,1 +1,0 @@
-Dense(256,relu)+Drop(0.3) -> Dense(128,relu)+Drop(0.2) -> Dense(64,relu)+Drop(0.1) -> Dense(1)

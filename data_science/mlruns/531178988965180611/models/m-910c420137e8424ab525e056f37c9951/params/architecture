@@ -1,1 +1,0 @@
-Dense(256,relu)+BN -> Dense(128,relu)+BN -> Dense(64,relu)+BN -> Dense(1)
