@@ -1,0 +1,27 @@
+artifact_path: file:///c:/Users/n.salazars/Documents/Uniandes_D_MSI/2026-1/IIND_4130/proyecto/p2/repo/IIND4130-P2/data_science/mlruns/531178988965180611/models/m-899324dd6f294c63a281cd3ee5f7fba0/artifacts
+flavors:
+  keras:
+    data: data
+    keras_backend: tensorflow
+    keras_version: 3.14.1
+    save_exported_model: false
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.keras
+    python_version: 3.12.10
+is_signature_from_type_hint: false
+mlflow_version: 3.12.0
+model_id: m-899324dd6f294c63a281cd3ee5f7fba0
+model_size_bytes: 1974346
+model_uuid: m-899324dd6f294c63a281cd3ee5f7fba0
+prompts: null
+run_id: 169691889f004ca3832d3205dd7930f6
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1, 457]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1,
+    1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-05-20 21:10:03.317984'

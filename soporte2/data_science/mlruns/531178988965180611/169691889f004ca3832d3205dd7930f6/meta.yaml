@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/n.salazars/Documents/Uniandes_D_MSI/2026-1/IIND_4130/proyecto/p2/repo/IIND4130-P2/data_science/mlruns/531178988965180611/169691889f004ca3832d3205dd7930f6/artifacts
+end_time: 1779311418336
+entry_point_name: ''
+experiment_id: '531178988965180611'
+lifecycle_stage: active
+run_id: 169691889f004ca3832d3205dd7930f6
+run_name: p1_arch_F_l2_bn
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1779311344705
+status: 3
+tags: []
+user_id: n.salazars

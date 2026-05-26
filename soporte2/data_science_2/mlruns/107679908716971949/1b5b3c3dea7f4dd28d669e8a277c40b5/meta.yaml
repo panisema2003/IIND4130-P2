@@ -1,0 +1,14 @@
+artifact_uri: file:c:/Users/manes/Downloads/Repositorios/IIND4130-P2/data_science_2/mlruns/107679908716971949/1b5b3c3dea7f4dd28d669e8a277c40b5/artifacts
+end_time: 1779754767605
+entry_point_name: ''
+experiment_id: '107679908716971949'
+lifecycle_stage: active
+run_id: 1b5b3c3dea7f4dd28d669e8a277c40b5
+run_name: sassy-shrew-76
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1779736962927
+status: 3
+tags: []
+user_id: manes

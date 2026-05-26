@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/n.salazars/Documents/Uniandes_D_MSI/2026-1/IIND_4130/proyecto/p2/repo/IIND4130-P2/data_science/mlruns/531178988965180611/1a0a7ab207cb4cd3841d0d658007312e/artifacts
+end_time: 1779161693911
+entry_point_name: ''
+experiment_id: '531178988965180611'
+lifecycle_stage: active
+run_id: 1a0a7ab207cb4cd3841d0d658007312e
+run_name: p3_arch_E_bottleneck_full_457_adam_5e4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1779161627516
+status: 3
+tags: []
+user_id: n.salazars
