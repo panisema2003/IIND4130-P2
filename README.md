@@ -25,4 +25,4 @@
 
 
 ## Enlace de la presentación 
-https://canva.link/e6kamipanyf2fuz
+https://canva.link/jqp9xeu44q8btht
