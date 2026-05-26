@@ -1,0 +1,70 @@
+{
+  "target_cols": [
+    "punt_matematicas",
+    "punt_lectura_critica",
+    "punt_c_naturales",
+    "punt_sociales_ciudadanas",
+    "punt_ingles"
+  ],
+  "target_labels": [
+    "Matemáticas",
+    "Lectura Crítica",
+    "C. Naturales",
+    "Soc. y Ciudadanas",
+    "Inglés"
+  ],
+  "architecture": "Dense(256,relu)+BN -> Dense(128,relu)+BN -> Dense(64,relu)+BN -> Dense(5)",
+  "n_features": 455,
+  "n_train": 50501,
+  "n_test": 12626,
+  "actual_epochs": 13,
+  "batch_size": 32,
+  "learning_rate": 0.001,
+  "metrics": {
+    "mae_mean": 7.043325519561767,
+    "rmse_mean": 8.89397302371297,
+    "r2_mean": 0.25658340454101564,
+    "per_subject": {
+      "punt_matematicas": {
+        "label": "Matemáticas",
+        "mae": 7.473703384399414,
+        "rmse": 9.405029217655889,
+        "r2": 0.2526928782463074,
+        "mean": 49.185768371695154,
+        "std": 10.977717834582165
+      },
+      "punt_lectura_critica": {
+        "label": "Lectura Crítica",
+        "mae": 6.735227584838867,
+        "rmse": 8.48462992754099,
+        "r2": 0.22634798288345337,
+        "mean": 50.40732174822184,
+        "std": 9.673780797212832
+      },
+      "punt_c_naturales": {
+        "label": "C. Naturales",
+        "mae": 6.6678619384765625,
+        "rmse": 8.409022218015952,
+        "r2": 0.25510215759277344,
+        "mean": 49.26817368162593,
+        "std": 9.772559347237962
+      },
+      "punt_sociales_ciudadanas": {
+        "label": "Soc. y Ciudadanas",
+        "mae": 7.587637901306152,
+        "rmse": 9.488893943783289,
+        "r2": 0.21867108345031738,
+        "mean": 47.67028371378333,
+        "std": 10.789180410098796
+      },
+      "punt_ingles": {
+        "label": "Inglés",
+        "mae": 6.752196788787842,
+        "rmse": 8.682289811568738,
+        "r2": 0.33010292053222656,
+        "mean": 48.40415353176929,
+        "std": 10.678612138241483
+      }
+    }
+  }
+}
