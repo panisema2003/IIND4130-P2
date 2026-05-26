@@ -1,0 +1,10 @@
+artifact_location: file:c:/Users/manes/Downloads/Repositorios/IIND4130-P2/data_science_2/mlruns/107679908716971949/models/m-d3dfd0eaed3843d092a31cd9a73933f4/artifacts
+creation_timestamp: 1779736962974
+experiment_id: '107679908716971949'
+last_updated_timestamp: 1779736970933
+model_id: m-d3dfd0eaed3843d092a31cd9a73933f4
+model_type: null
+name: final_model
+source_run_id: 1b5b3c3dea7f4dd28d669e8a277c40b5
+status: 2
+status_message: null
