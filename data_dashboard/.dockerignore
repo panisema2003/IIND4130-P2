@@ -8,3 +8,9 @@ __pycache__/
 .gitignore
 *.md
 export_model.py
+export_model_q3.py
+build_background.py
+build_colegios.py
+build_shap.py
+model/*.bak
+model_q3/*.bak
